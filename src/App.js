@@ -1,23 +1,65 @@
-import logo from './logo.svg';
+import React, { useState, useRef } from 'react';
 import './App.css';
+const axios = require('axios').default
 
 function App() {
+  const corsAnywhere = "https://cors-anywhere.herokuapp.com/"
+  const [cityVal, setCityVal] = useState('')
+  const [highRatings, setHightRatings] = useState([])
+  const cityInputRef = useRef('')
+  
+
+  const handleInput = (e) => {
+    setCityVal(e.target.value)
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // get data from Yelp
+   axios.get(`${corsAnywhere}https://api.yelp.com/v3/businesses/search?location=${cityVal}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+    },
+    // params: {
+    //   categories: 'breakfast_brunch',
+    // }
+  }).then(response => {
+    let busnessesArr = response.data.businesses
+    // let fourHalfStars = busnessesArr.map(item => item.rating >= 4.5)
+    // setHightRatings(fourHalfStars)
+
+    console.log(busnessesArr)
+
+    for (const business of busnessesArr) {
+      if (business.rating >= 4.5) {
+         setHightRatings(state => [...state, business])
+      }
+    }
+   
+
+  }).catch(err => console.log('error'))
+  }
+
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h3>Search By City:</h3>
+        <form>
+          <label>City</label>
+          <input type="text" ref={cityInputRef} onBlur={handleInput}></input>
+          <button onClick={handleSubmit}>Submit</button>
+        </form>
+        {
+          highRatings.map(item => {
+            return(
+            <div key={item.id}>
+              <h2>{item.name}</h2>
+              <p>{item.rating} Stars</p>
+            </div>
+            )
+          })
+        }
     </div>
   );
 }
