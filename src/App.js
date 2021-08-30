@@ -16,7 +16,7 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault()
     // get data from Yelp
-   axios.get(`${corsAnywhere}https://api.yelp.com/v3/businesses/search?location=${cityVal}`, {
+   axios.get(`https://api.yelp.com/v3/businesses/search?location=${cityVal}`, {
     headers: {
       Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
     },
