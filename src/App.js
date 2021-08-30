@@ -42,6 +42,8 @@ function App() {
   
   return (
     <div className="App">
+      <h1>Great Restaurants Search!</h1>
+      <p>Enter the city and we'll return 50 of the best restaurants in your area, rated 4.5 or higher.</p>
         <h3>Search By City:</h3>
         <form>
           <label>City</label>
