@@ -20,9 +20,9 @@ function App() {
     headers: {
       Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
     },
-    // params: {
-    //   categories: 'breakfast_brunch',
-    // }
+    params: {
+      limit: 50,
+    }
   }).then(response => {
     let busnessesArr = response.data.businesses
     // let fourHalfStars = busnessesArr.map(item => item.rating >= 4.5)
