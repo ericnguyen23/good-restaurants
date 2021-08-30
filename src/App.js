@@ -25,9 +25,6 @@ function App() {
     }
   }).then(response => {
     let busnessesArr = response.data.businesses
-    // let fourHalfStars = busnessesArr.map(item => item.rating >= 4.5)
-    // setHightRatings(fourHalfStars)
-
     console.log(busnessesArr)
 
     for (const business of busnessesArr) {
@@ -37,7 +34,8 @@ function App() {
     }
    
 
-  }).catch(err => console.log('error'))
+  }).then(setHightRatings([]))
+  .catch(err => console.log('error'))
   }
 
 
